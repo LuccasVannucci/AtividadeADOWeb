@@ -18,3 +18,7 @@ O JSON foi adicionado ao projeto, todo nome de carro que for adicionado no campo
 
 O Programa foi feito com a ajuda de pesquisas na internet, vídeo aulas do professor e tive que usar auxílio de IA pois tive muita dificuldade para entender.
 
+
+
+Atualizei para retirar arquivos desnecessários
+
