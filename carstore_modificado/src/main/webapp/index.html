@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Car Store</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        form {
+            margin-bottom: 30px;
+        }
+        input[type="text"] {
+            padding: 8px;
+            width: 300px;
+            font-size: 14px;
+        }
+        button {
+            padding: 8px 20px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        #resultado {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            display: none;
+            background-color: #f9f9f9;
+        }
+        .sucesso {
+            color: green;
+            border-color: green;
+            background-color: #f0fff0;
+        }
+        .erro {
+            color: red;
+            border-color: red;
+            background-color: #fff0f0;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 3px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h2>Car Store</h2>
+
+    <form id="carForm">
+        <label>Nome do Carro:</label>
+        <input type="text" name="car-name" id="car-name" required>
+        <button type="submit">Registrar</button>
+    </form>
+
+    <div id="resultado"></div>
+
+    <script>
+        document.getElementById('carForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const carName = document.getElementById('car-name').value;
+
+            // Enviar dados via fetch API
+            fetch('/create-car', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: 'car-name=' + encodeURIComponent(carName)
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Exibir resposta JSON na página
+                const resultadoDiv = document.getElementById('resultado');
+                resultadoDiv.innerHTML = '<h3>Resposta JSON:</h3><pre>' + JSON.stringify(data, null, 2) + '</pre>';
+                resultadoDiv.classList.add('sucesso');
+                resultadoDiv.style.display = 'block';
+
+                // Limpar o campo de entrada
+                document.getElementById('car-name').value = '';
+            })
+            .catch(error => {
+                const resultadoDiv = document.getElementById('resultado');
+                resultadoDiv.innerHTML = '<h3>Erro:</h3><p>' + error + '</p>';
+                resultadoDiv.classList.add('erro');
+                resultadoDiv.style.display = 'block';
+            });
+        });
+    </script>
+
+</body>
+</html>
